@@ -59,3 +59,60 @@ int lengthOfLastWord(char* s) {
     }
     return n;
 }
+int mySqrt(int x) {
+    long long i=1;
+    while(i*i<=x){
+        i++;
+    }
+    return i-1;
+}
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* plusOne(int* digits, int digitsSize, int* returnSize) {
+    digits[digitsSize-1]+=1;
+    for(int i=digitsSize-1;i>=0;i--)
+    {
+        if(digits[i]==10)
+        {
+            digits[i]%=10;
+            if(i>0)
+            digits[i-1]+=1;
+        }
+    }
+    int *n;
+    if(digits[0]==0)
+    {
+        n=(int*)malloc((digitsSize+1)*sizeof(int));
+        n[0]=1;
+        for(int i=0;i<digitsSize;i++)
+        {
+            n[i+1]=digits[i];
+        }
+        *returnSize=digitsSize+1;
+    }
+    else
+    {
+        n=(int*)malloc(digitsSize*sizeof(int));
+        for(int i=0;i<digitsSize;i++)
+        {
+            n[i]=digits[i];
+        }
+        *returnSize=digitsSize;
+    }
+    return n;
+}
+int climbStairs(int n) {
+    int a1=1,a2=2,a3=1;
+    if(n==2)
+    {
+        a3=2;
+    }
+    for(int i=2;i<n;i++)
+    {
+        a3=a1+a2;
+        a1=a2;
+        a2=a3;
+    }
+    return a3;
+}
