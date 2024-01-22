@@ -116,3 +116,59 @@ int climbStairs(int n) {
     }
     return a3;
 }
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
+    int a=0;
+    for(int i=m;i<nums1Size;i++)
+    {
+        nums1[i]=nums2[a];
+        a++;
+    }
+    for(int i=0;i<nums1Size-1;i++)
+    {
+        int count=1;
+        for(int j=0;j<nums1Size-1;j++)
+        {
+            if(nums1[j]>nums1[j+1])
+            {
+                int temp=nums1[j];
+                nums1[j]=nums1[j+1];
+                nums1[j+1]=temp;
+                count=0;
+            }
+        }
+        if(count==1)
+        {
+            break;
+        }
+    }
+}
+int majorityElement(int* nums, int numsSize) {
+    int i;
+    for(i=0;i<numsSize-1;i++)
+    {
+        int count=0;
+        for(int j=0;j<numsSize-1-i;j++)
+        {
+            if(nums[j]>nums[j+1])
+            {
+                int temp=nums[j];
+                nums[j]=nums[j+1];
+                nums[j+1]=temp;
+                count=1;
+            }    
+        }
+        if(count==0)
+        {
+            break;
+        }
+    }
+    return nums[numsSize/2];
+}
+int titleToNumber(char* columnTitle) {
+    int a=0;
+    for(int i=0;i<strlen(columnTitle);i++)
+    {
+        a+=(columnTitle[i]-64)*pow(26,strlen(columnTitle)-i-1);
+    }
+    return a;
+}
