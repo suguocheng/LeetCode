@@ -172,3 +172,20 @@ int titleToNumber(char* columnTitle) {
     }
     return a;
 }
+int hammingWeight(uint32_t n) {
+    int count=0;
+    while(n)
+    {
+        n=n&(n-1);
+        count++;
+    }
+    return count;
+}
+uint32_t reverseBits(uint32_t n) {
+    uint32_t ans = 0;
+    for (int i = 0; i < 8 * sizeof(uint32_t); i++) {
+        ans = (ans << 1) + (n & 1);
+        n = n >> 1;
+    }
+    return ans;
+}
