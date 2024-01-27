@@ -189,3 +189,49 @@ uint32_t reverseBits(uint32_t n) {
     }
     return ans;
 }
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+int** generate(int numRows, int* returnSize, int** returnColumnSizes) {
+    int **a = (int**)malloc(sizeof(int*) * numRows);
+    *returnColumnSizes = (int*)malloc(sizeof(int) * numRows);
+
+    for (int i = 0; i < numRows; i++) {
+        a[i] = (int*)malloc((i + 1) * sizeof(int));
+        (*returnColumnSizes)[i] = i + 1;
+    }
+
+    a[0][0] = 1;
+
+    for (int i = 1; i < numRows; i++) {
+        for (int j = 0; j <= i; j++) {
+            if (j == 0 || j == i) {
+                a[i][j] = 1;
+            } else {
+                a[i][j] = a[i - 1][j - 1] + a[i - 1][j];
+            }
+        }
+    }
+
+    *returnSize = numRows;
+
+    return a;
+}
+int strStr(char* haystack, char* needle) {
+    int n = strlen(haystack), m = strlen(needle);
+    for (int i = 0; i + m <= n; i++) {
+        bool flag = true;
+        for (int j = 0; j < m; j++) {
+            if (haystack[i + j] != needle[j]) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            return i;
+        }
+    }
+    return -1;
+}
