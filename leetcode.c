@@ -235,3 +235,29 @@ int strStr(char* haystack, char* needle) {
     }
     return -1;
 }
+int findPoisonedDuration(int* timeSeries, int timeSeriesSize, int duration) {
+    int time=0;
+    if(timeSeriesSize==1)
+    {
+        time=duration;
+    }
+    else
+    {
+        for(int i=0;i<timeSeriesSize-1;i++)
+        {
+            if(timeSeries[i+1]-timeSeries[i]+1<=duration)
+            {
+                time+=timeSeries[i+1]-timeSeries[i];
+            }
+            else
+            {
+                time+=duration;
+            }
+            if(i+1==timeSeriesSize-1)
+            {
+                time+=duration;
+            }
+        }
+    }
+    return time;
+}
