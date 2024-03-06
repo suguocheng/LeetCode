@@ -261,3 +261,31 @@ int findPoisonedDuration(int* timeSeries, int timeSeriesSize, int duration) {
     }
     return time;
 }
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* removeElements(struct ListNode* head, int val) {
+    while (NULL != head && head->val == val) {
+        head = head->next;
+    }
+    if (NULL == head) {
+        return head;
+    }
+    struct ListNode* q=head;
+    while(q->next!=NULL)
+    {
+        if(q->next->val==val)
+        {
+            q->next=q->next->next;
+        }
+        else
+        {
+            q=q->next;
+        }
+    }
+    return head;
+}
