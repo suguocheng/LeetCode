@@ -289,3 +289,78 @@ struct ListNode* removeElements(struct ListNode* head, int val) {
     }
     return head;
 }
+typedef struct LinkedList{
+    int val;
+    struct LinkedList*next;
+} MyLinkedList;
+
+
+MyLinkedList* myLinkedListCreate() {
+    MyLinkedList*head=(MyLinkedList*)malloc(sizeof(MyLinkedList));
+    head->next=NULL;
+    return head;
+}
+
+int myLinkedListGet(MyLinkedList* obj, int index) {
+    MyLinkedList*p=obj->next;
+    int i=0;
+    while(p!=NULL)
+    {
+        i++;
+        if(i==index)
+        {
+            return p->val;
+        }
+        else
+        {
+            p=p->next;
+        }
+    }
+    return -1;
+}
+
+void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
+    MyLinkedList*newhead=(MyLinkedList*)malloc(sizeof(MyLinkedList));
+    newhead->val=val;
+    newhead->next=obj->next;
+    obj->next=newhead;
+}
+
+void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
+    MyLinkedList*newtail=(MyLinkedList*)malloc(sizeof(MyLinkedList));
+    newtail->val=val;
+    MyLinkedList*p=obj;
+    while(p->next!=NULL)
+    {
+        p=p->next;
+    }
+    p->next=newtail;
+}
+
+void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
+    
+}
+
+void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
+    
+}
+
+void myLinkedListFree(MyLinkedList* obj) {
+    
+}
+
+/**
+ * Your MyLinkedList struct will be instantiated and called as such:
+ * MyLinkedList* obj = myLinkedListCreate();
+ * int param_1 = myLinkedListGet(obj, index);
+ 
+ * myLinkedListAddAtHead(obj, val);
+ 
+ * myLinkedListAddAtTail(obj, val);
+ 
+ * myLinkedListAddAtIndex(obj, index, val);
+ 
+ * myLinkedListDeleteAtIndex(obj, index);
+ 
+ * myLinkedListFree(obj);
+*/
