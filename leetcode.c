@@ -306,7 +306,6 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
     int i=0;
     while(p!=NULL)
     {
-        i++;
         if(i==index)
         {
             return p->val;
@@ -315,6 +314,7 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
         {
             p=p->next;
         }
+        i++;
     }
     return -1;
 }
@@ -335,18 +335,76 @@ void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
         p=p->next;
     }
     p->next=newtail;
+    newtail->next=NULL;
 }
 
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-    
+    MyLinkedList*newnode=(MyLinkedList*)malloc(sizeof(MyLinkedList));
+    newnode->val=val;
+    int i=0;
+    MyLinkedList*p=obj->next;
+    while(p!=NULL)
+    {
+        if(i==1&&index==1)
+        {
+            newnode->next=obj->next;
+            obj->next=newnode;
+            return;
+        }
+        else if(i+1==index&&p->next!=NULL)
+        {
+            newnode->next=p->next;
+            p->next=newnode;
+            return;
+        }
+        else
+        {
+            p=p->next;
+        }
+        i++;
+    }
+    if(i==index)
+    {
+        newnode->next=NULL;
+        p->next=newnode;
+    }
 }
 
 void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
-    
+    MyLinkedList*p=obj->next;
+    int i=0;
+    while(p!=NULL)
+    {
+        if(i==1&&index==1)
+        {
+            p=obj;
+            MyLinkedList*tmp=p->next;
+            p->next=p->next->next;
+            free(tmp);
+            return;
+        }
+        else if(i+1==index)
+        {
+            MyLinkedList*tmp=p->next;
+            p->next=p->next->next;
+            free(tmp);
+            return;
+        }
+        else
+        {
+            p=p->next;
+        }
+        i++;
+    }
 }
 
 void myLinkedListFree(MyLinkedList* obj) {
-    
+    while(obj!=NULL)
+    {
+        MyLinkedList*tmp=obj;
+        obj=obj->next;
+        free(tmp);
+    }
 }
 
 /**
