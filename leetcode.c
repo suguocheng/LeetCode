@@ -289,19 +289,20 @@ struct ListNode* removeElements(struct ListNode* head, int val) {
     }
     return head;
 }
-typedef struct LinkedList{
+
+typedef struct LinkedList{//ok
     int val;
     struct LinkedList*next;
 } MyLinkedList;
 
 
-MyLinkedList* myLinkedListCreate() {
+MyLinkedList* myLinkedListCreate() {//ok
     MyLinkedList*head=(MyLinkedList*)malloc(sizeof(MyLinkedList));
     head->next=NULL;
     return head;
 }
 
-int myLinkedListGet(MyLinkedList* obj, int index) {
+int myLinkedListGet(MyLinkedList* obj, int index) {//ok
     MyLinkedList*p=obj->next;
     int i=0;
     while(p!=NULL)
@@ -319,14 +320,14 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
     return -1;
 }
 
-void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
+void myLinkedListAddAtHead(MyLinkedList* obj, int val) {//ok
     MyLinkedList*newhead=(MyLinkedList*)malloc(sizeof(MyLinkedList));
     newhead->val=val;
     newhead->next=obj->next;
     obj->next=newhead;
 }
 
-void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
+void myLinkedListAddAtTail(MyLinkedList* obj, int val) {//ok
     MyLinkedList*newtail=(MyLinkedList*)malloc(sizeof(MyLinkedList));
     newtail->val=val;
     MyLinkedList*p=obj;
@@ -334,25 +335,24 @@ void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
     {
         p=p->next;
     }
-    p->next=newtail;
     newtail->next=NULL;
+    p->next=newtail;
 }
 
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-    MyLinkedList*newnode=(MyLinkedList*)malloc(sizeof(MyLinkedList));
-    newnode->val=val;
     int i=0;
     MyLinkedList*p=obj->next;
+    if(index==0)
+    {
+        myLinkedListAddAtHead(obj,val);
+        return;
+    }
     while(p!=NULL)
     {
-        if(i==1&&index==1)
+        if(i+1==index&&p->next!=NULL)
         {
-            newnode->next=obj->next;
-            obj->next=newnode;
-            return;
-        }
-        else if(i+1==index&&p->next!=NULL)
-        {
+            MyLinkedList*newnode=(MyLinkedList*)malloc(sizeof(MyLinkedList));
+            newnode->val=val;
             newnode->next=p->next;
             p->next=newnode;
             return;
@@ -365,25 +365,24 @@ void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
     }
     if(i==index)
     {
-        newnode->next=NULL;
-        p->next=newnode;
+        myLinkedListAddAtTail(obj,val);
     }
 }
 
 void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
     MyLinkedList*p=obj->next;
     int i=0;
+    if(index==0)
+    {
+        p=obj;
+        MyLinkedList*tmp=p->next;
+        p->next=p->next->next;
+        free(tmp);
+        return;
+    }
     while(p!=NULL)
     {
-        if(i==1&&index==1)
-        {
-            p=obj;
-            MyLinkedList*tmp=p->next;
-            p->next=p->next->next;
-            free(tmp);
-            return;
-        }
-        else if(i+1==index)
+        if(i+1==index&&p->next!=NULL)
         {
             MyLinkedList*tmp=p->next;
             p->next=p->next->next;
