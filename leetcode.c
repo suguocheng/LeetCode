@@ -421,3 +421,63 @@ void myLinkedListFree(MyLinkedList* obj) {
  
  * myLinkedListFree(obj);
 */
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* reverseList(struct ListNode* head) {
+    struct ListNode* p=head;
+    if(p==NULL)
+    {
+        return p;
+    }
+    struct ListNode* newhead=(struct ListNode*)malloc(sizeof(struct ListNode));
+    newhead->next=NULL;
+    struct ListNode* node=(struct ListNode*)malloc(sizeof(struct ListNode));
+    node->val=p->val;
+    newhead->next=node;
+    node->next=NULL;
+    p=p->next;
+    while(p!=NULL)
+    {
+        struct ListNode* node=(struct ListNode*)malloc(sizeof(struct ListNode));
+        node->val=p->val;
+        node->next=newhead->next;
+        newhead->next=node;
+        p=p->next;
+    }
+    newhead=newhead->next;
+    return newhead;
+}
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* swapPairs(struct ListNode* head) {
+    if(head==NULL)
+    {
+        return head;
+    }
+    struct ListNode* newhead=(struct ListNode*)malloc(sizeof(struct ListNode));
+    newhead->next=head;
+    struct ListNode* left=newhead;
+    struct ListNode* right=newhead->next;
+    while(right->next)
+    {
+        left->next=right->next;
+        right->next=right->next->next;
+        left->next->next=right;
+        left=right;
+        if(right->next)
+        right=right->next;
+    }
+    return newhead->next;
+}
