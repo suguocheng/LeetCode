@@ -481,3 +481,73 @@ struct ListNode* swapPairs(struct ListNode* head) {
     }
     return newhead->next;
 }
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    if(head->next==NULL)
+    {
+        head=NULL;
+        return head;
+    }
+    int count=0;
+    struct ListNode* p=head;
+    while(p)
+    {
+        count++;
+        p=p->next;
+    }
+    p=head;
+    if(count-n==0)
+    {
+        struct ListNode* tem=head;
+        head=head->next;
+        free(tem);
+    }
+    else
+    {
+        for(int i=1;i<count-n;i++)
+        {
+            p=p->next;
+        }
+        struct ListNode* temp=p->next;
+        p->next=p->next->next;
+        free(temp);
+    }
+    return head;
+}
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    struct ListNode *p1=headA;
+    struct ListNode *p2=headB;
+    while(p1)
+    {
+        p2=headB;
+        while(p2)
+        {
+            if(p1==p2)
+            {
+                return p2;
+            }
+            p2=p2->next;
+            // if(p2==NULL&&p1->next!=NULL)
+            // {
+            //     p2=headB;
+            // }
+        }
+        p1=p1->next;
+    }
+    return NULL;
+}
