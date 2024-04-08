@@ -551,3 +551,67 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
     }
     return NULL;
 }
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+bool hasCycle(struct ListNode *head) {
+    if(head==NULL)
+    {
+        return 0;
+    }
+    struct ListNode *slow=(struct ListNode *)malloc(sizeof(struct ListNode));
+    struct ListNode *fast=(struct ListNode *)malloc(sizeof(struct ListNode));
+    slow->next=head;
+    fast->next=head;
+    while(slow!=fast)
+    {
+        slow=slow->next;
+        if(fast->next!=NULL)
+        {
+            fast=fast->next->next;
+        }
+        if(fast==NULL||fast->next==NULL)
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *detectCycle(struct ListNode *head) {
+    if(!head)
+    {
+        return NULL;
+    }
+    struct ListNode *slow=head;
+    struct ListNode *fast=head;
+    while(fast&&fast->next)
+    {
+        slow=slow->next;
+        fast=fast->next->next;
+        if(slow==fast)
+        {
+            struct ListNode *p=fast;
+            struct ListNode *q=head;
+            while(p!=q)
+            {
+                p=p->next;
+                q=q->next;
+            }
+            return p;
+        }
+    }
+    return NULL;
+}
