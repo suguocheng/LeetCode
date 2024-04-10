@@ -615,3 +615,151 @@ struct ListNode *detectCycle(struct ListNode *head) {
     }
     return NULL;
 }
+
+
+
+
+typedef struct {
+    int stackin[100],stackout[100];
+    int stackintop,stackouttop;
+} MyQueue;
+
+
+MyQueue* myQueueCreate() {
+    MyQueue *queue=(MyQueue *)malloc(sizeof(MyQueue));
+    queue->stackintop=0;
+    queue->stackouttop=0;
+    return queue;
+}
+
+void myQueuePush(MyQueue* obj, int x) {
+    obj->stackin[obj->stackintop]=x;
+    obj->stackintop++;
+}
+
+int myQueuePop(MyQueue* obj) {
+    int top;
+    while(obj->stackintop>0)
+    {
+        obj->stackout[obj->stackouttop++]=obj->stackin[--obj->stackintop];
+    }
+    top=obj->stackout[--obj->stackouttop];
+    while(obj->stackouttop>0)
+    {
+        obj->stackin[obj->stackintop++]=obj->stackout[--obj->stackouttop];
+    }
+    return top;
+}
+
+int myQueuePeek(MyQueue* obj) {
+    return obj->stackin[0];
+}
+
+bool myQueueEmpty(MyQueue* obj) {
+    if(obj->stackintop==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void myQueueFree(MyQueue* obj) {
+    obj->stackintop=0;
+    obj->stackouttop=0;
+}
+
+/**
+ * Your MyQueue struct will be instantiated and called as such:
+ * MyQueue* obj = myQueueCreate();
+ * myQueuePush(obj, x);
+ 
+ * int param_2 = myQueuePop(obj);
+ 
+ * int param_3 = myQueuePeek(obj);
+ 
+ * bool param_4 = myQueueEmpty(obj);
+ 
+ * myQueueFree(obj);
+*/
+
+
+
+
+typedef struct {
+    int queuein[100],queueout[100];
+    int queueinfront,queueinrear;
+    int queueoutfront,queueoutrear;
+} MyStack;
+
+
+MyStack* myStackCreate() {
+    MyStack *stack=(MyStack *)malloc(sizeof(MyStack));
+    stack->queueinfront=0;
+    stack->queueinrear=0;
+    stack->queueoutfront=0;
+    stack->queueoutrear=0;
+    return stack;
+}
+
+void myStackPush(MyStack* obj, int x) {
+    obj->queuein[obj->queueinrear++]=x;
+}
+
+int myStackPop(MyStack* obj) {
+    for(int i=obj->queueinrear-1;i>=obj->queueinfront;i--)
+    {
+        obj->queueout[obj->queueoutrear++]=obj->queuein[i];
+    }
+    int top=obj->queueout[0];
+    if(obj->queueoutrear==1)
+    {
+        obj->queuein[0]=obj->queueout[0];
+        obj->queueinrear=1;
+    }
+    obj->queueinrear=0;
+    for(int i=obj->queueoutrear-1;i>obj->queueoutfront;i--)
+    {
+        obj->queuein[obj->queueinrear++]=obj->queueout[i];
+    }
+    obj->queueoutrear=0;
+    return top;
+}
+
+int myStackTop(MyStack* obj) {
+    return obj->queuein[obj->queueinrear-1];
+}
+
+bool myStackEmpty(MyStack* obj) {
+    if(obj->queueinrear==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void myStackFree(MyStack* obj) {
+    obj->queueinfront=0;
+    obj->queueinrear=1;
+    obj->queueoutfront=0;
+    obj->queueoutrear=1;
+}
+
+/**
+ * Your MyStack struct will be instantiated and called as such:
+ * MyStack* obj = myStackCreate();
+ * myStackPush(obj, x);
+ 
+ * int param_2 = myStackPop(obj);
+ 
+ * int param_3 = myStackTop(obj);
+ 
+ * bool param_4 = myStackEmpty(obj);
+ 
+ * myStackFree(obj);
+*/
