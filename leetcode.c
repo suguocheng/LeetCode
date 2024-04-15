@@ -763,3 +763,61 @@ void myStackFree(MyStack* obj) {
  
  * myStackFree(obj);
 */
+
+typedef struct{
+    char string[10000];
+    int top;
+}str;
+
+bool isValid(char* s) {
+    str *s2=(str*)malloc(sizeof(str));
+    s2->top=0;
+    int i=0;
+    // if(s[i]=='}'||s[i]==']'||s[i]==')')
+    // {
+    //     return 0;
+    // }
+    while(s[i]!='\0')
+    {
+        if(s[i]=='{')
+        {
+            s2->string[s2->top]=s[i];
+            s2->top++;
+        }
+        else if(s[i]=='[')
+        {
+            s2->string[s2->top]=s[i];
+            s2->top++;
+        }
+        else if(s[i]=='(')
+        {
+            s2->string[s2->top]=s[i];
+            s2->top++;
+        }
+        else if(s2->top>0&&s2->string[s2->top-1]=='{'&&s[i]=='}')
+        {
+            s2->top--;
+        }
+        else if(s2->top>0&&s2->string[s2->top-1]=='['&&s[i]==']')
+        {
+            s2->top--;
+        }
+        else if(s2->top>0&&s2->string[s2->top-1]=='('&&s[i]==')')
+        {
+            s2->top--;
+        }
+        else if(s[i]=='}'||s[i]==']'||s[i]==')')
+        {
+            return 0;
+        }
+        i++;
+    }
+    if(s2->top==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
