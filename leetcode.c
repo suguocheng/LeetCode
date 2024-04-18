@@ -876,3 +876,46 @@ char* removeDuplicates(char* s) {
     s2->string[s2->top]='\0';
     return s2->string;
 }
+
+typedef struct{
+    char *string[10000];
+    int top;
+}str;
+
+int evalRPN(char** tokens, int tokensSize) {
+    str* s=(str*)malloc(sizeof(str));
+    for (int i=0;i<10000;i++)
+    {
+        s->string[i]=(char*)malloc(100);
+    }
+    s->top=0;
+    for(int i=0;i<tokensSize;i++)
+    {
+        if(strcmp(tokens[i],"+")==0)
+        {
+            sprintf(s->string[s->top-2],"%d",atoi(s->string[s->top-2])+atoi(s->string[s->top-1]));
+            s->top--;
+        }
+        else if(strcmp(tokens[i],"-")==0)
+        {
+            sprintf(s->string[s->top-2],"%d",atoi(s->string[s->top-2])-atoi(s->string[s->top-1]));
+            s->top--;
+        }
+        else if(strcmp(tokens[i],"*")==0)
+        {
+            sprintf(s->string[s->top-2],"%d",atoi(s->string[s->top-2])*atoi(s->string[s->top-1]));
+            s->top--;
+        }
+        else if(strcmp(tokens[i],"/")==0)
+        {
+            sprintf(s->string[s->top-2],"%d",atoi(s->string[s->top-2])/atoi(s->string[s->top-1]));
+            s->top--;
+        }
+        else
+        {
+            strcpy(s->string[s->top],tokens[i]);
+            s->top++;
+        }
+    }
+    return atoi(s->string[s->top-1]);
+}
