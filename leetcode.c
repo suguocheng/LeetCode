@@ -919,3 +919,30 @@ int evalRPN(char** tokens, int tokensSize) {
     }
     return atoi(s->string[s->top-1]);
 }
+
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        vector<int> n(2);
+        sort(nums.begin(),nums.end());
+        int prev=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            int curr=nums[i];
+            if(curr==prev)
+            {
+                n[0]=prev;
+            }
+            else if(curr-prev>1)
+            {
+                n[1]=prev+1;
+            }
+            prev=curr;
+        }
+        if(nums[nums.size()-1]!=nums.size())
+        {
+            n[1]=nums.size();
+        }
+        return n;
+    }
+};
