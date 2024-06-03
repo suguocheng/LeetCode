@@ -992,3 +992,24 @@ int reverse(int x){
     return n > INT_MAX || n < INT_MIN ? 0 : n;
 }
 
+class DiningPhilosophers {
+    mutex mtx;
+public:
+    DiningPhilosophers() {
+        
+    }
+
+    void wantsToEat(int philosopher,
+                    function<void()> pickLeftFork,
+                    function<void()> pickRightFork,
+                    function<void()> eat,
+                    function<void()> putLeftFork,
+                    function<void()> putRightFork) {
+		unique_lock<mutex> lock(mtx);
+        pickLeftFork();
+        pickRightFork();
+        eat();
+        putLeftFork();
+        putRightFork();
+    }
+};
