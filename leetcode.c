@@ -1046,3 +1046,14 @@ struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
     free(tem);
     return head;
 }
+
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        int n=5;
+        for(int i=0,j=s.size()-1;i<s.size()/2;i++,j--)
+        {
+            swap(s[i],s[j]);
+        }
+    }
+};
