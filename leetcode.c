@@ -1056,4 +1056,30 @@ public:
             swap(s[i],s[j]);
         }
     }
+}; 
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        int slow=s.length()-1,fast=s.length()-1;
+        int len=0;
+        std::string str;
+        while(fast-1!=0)
+        {
+            if((s[s.length()-1]!=' ')||(s[fast+1]==' '&&s[fast]!=' '))
+            {
+                slow=fast;
+            }
+            if(s[fast]!=' '&&s[fast-1]==' ')
+            {
+                len=slow-fast+1;
+                std::string a=s.substr(fast,slow+1);
+                str.append(a);
+                a.clear();
+                str.append(" ");
+            }
+            fast--;
+        }
+        return str;
+    }
 };
