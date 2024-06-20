@@ -1061,25 +1061,30 @@ public:
 class Solution {
 public:
     string reverseWords(string s) {
-        int slow=s.length()-1,fast=s.length()-1;
-        int len=0;
+        int fast=s.length()-1;
+        int slow;
         std::string str;
-        while(fast-1!=0)
+        while(fast>=0)
         {
-            if((s[s.length()-1]!=' ')||(s[fast+1]==' '&&s[fast]!=' '))
+            while(fast>=0&&s[fast]==' ')
             {
-                slow=fast;
+                fast--;
             }
-            if(s[fast]!=' '&&s[fast-1]==' ')
+            if(fast<0)
             {
-                len=slow-fast+1;
-                std::string a=s.substr(fast,slow+1);
-                str.append(a);
-                a.clear();
-                str.append(" ");
+                break;
             }
-            fast--;
+            slow=fast;
+            while(fast>=0&&s[fast]!=' ')
+            {
+                fast--;
+            }
+            if(!str.empty())
+            {
+                str+= ' ';
+            }
+            str+=s.substr(fast+1,slow-fast);
         }
-        return str;
+        return str;    
     }
 };
