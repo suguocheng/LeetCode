@@ -1088,3 +1088,35 @@ public:
         return str;    
     }
 };
+
+class Foo {
+public:
+    mutex mtx1,mtx2,mtx3;
+    std::condition_variable cv1,cv2;
+    Foo() {
+        
+    }
+
+    void first(function<void()> printFirst) {
+        
+        // printFirst() outputs "first". Do not change or remove this line.
+        std::unique_lock<std::mutex> lock(mtx1);
+        printFirst();
+        cv1.notify_one();
+    }
+
+    void second(function<void()> printSecond) {
+        std::unique_lock<std::mutex> lock(mtx2);
+        cv1.wait(lock);
+        // printSecond() outputs "second". Do not change or remove this line.
+        printSecond();
+        cv2.notify_one();
+    }
+
+    void third(function<void()> printThird) {
+       std::unique_lock<std::mutex> lock(mtx3);
+        cv2.wait(lock);
+        // printThird() outputs "third". Do not change or remove this line.
+        printThird();
+    }
+};
