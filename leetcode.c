@@ -1120,3 +1120,20 @@ public:
         printThird();
     }
 };
+
+func numOfSubarrays(arr []int, k int, threshold int) int {
+    n := 0
+    m := 0
+    for i,right := range arr {
+        m += right
+        if i < k-1 {
+            continue
+        }
+        if float64(m)/float64(k) >= float64(threshold) {
+            n++
+        }
+        left := arr[i-k+1]
+        m -= left
+    }
+    return n
+}
