@@ -1137,3 +1137,22 @@ func numOfSubarrays(arr []int, k int, threshold int) int {
     }
     return n
 }
+
+func minimumRecolors(blocks string, k int) int {
+    m := k
+    n := 0
+    for i,right := range blocks {
+        if right == 'W' {
+            n += 1
+        }
+        if i < k-1 {
+            continue
+        }
+        m = min(n, m)
+        left := blocks[i-k+1]
+        if left == 'W' {
+            n -= 1
+        }
+    }
+    return m
+}
